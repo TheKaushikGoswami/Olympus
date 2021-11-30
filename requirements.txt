@@ -1,0 +1,10 @@
+Pillow == 8.2.0
+ago == 0.0.93
+aiohttp == 3.7.4.post0
+disputils == 0.2.0
+requests == 2.25.1
+
+# For Installing py-cord use:
+git+https://github.com/Pycord-Development/pycord
+#or
+py-cord[voice]
