@@ -11,12 +11,17 @@
   <br> <br>
 <strong> Olympus is made with ❤️ by <u>TheKaushikGoswami</u> </strong>
 <br>
+</div>
+<div>
 <hr>
+<p> 
+🎴 Olympus is an advanced discord bot, written in <b> Python </b> using the library named, <b> py-cord </b>. <br>
 
-<p> Olympus is an advanced discord bot, written in <b> Python </b> using the library named, <b> py-cord </b>. <br> 
-This bot is totally based on <b> Application Commands </b> a.k.a <code>/Slash commands</code> supporting other new discord features with it. <br>
-The major features of the bot are <code>Moderation, Fun, Utility, Games, etc. </code> - based commands. <br>
-The bot is <b> user-friendly </b> too, making comfortable for everyone to get familiar with discord bots and stuff.</p>
+✒️ This bot is totally based on <b> Application Commands </b> a.k.a <code>/Slash commands</code> supporting other new discord features with it. <br>
+
+🤝 The major features of the bot are <code>Moderation, Fun, Utility, Games, etc. </code> - based commands. <br>
+
+🍁 The bot is <b> user-friendly </b> too, making comfortable for everyone to get familiar with discord bots and stuff.</p>
 </div>
 
 <hr>
