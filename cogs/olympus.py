@@ -6,8 +6,6 @@ import datetime
 import random
 import platform
 import time
-from ago import human
-import collections
 from discord.ext.commands import bot
 import discord.utils
 
