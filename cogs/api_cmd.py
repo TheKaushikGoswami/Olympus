@@ -1,4 +1,3 @@
-from datetime import datetime
 import discord
 from discord.ext import commands
 import io
@@ -6,7 +5,6 @@ from logging import error
 from discord.commands.commands import Option, slash_command
 from discord.ext import commands
 import aiohttp
-from discord.ext.commands.errors import MissingPermissions
 import requests
 
 class Api(commands.Cog):

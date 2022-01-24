@@ -1,10 +1,10 @@
 import discord
-from discord.commands.commands import Option, message_command
+from discord.commands.commands import Option
 from discord.commands.errors import ApplicationCommandInvokeError
-from discord.errors import Forbidden, HTTPException, NotFound
+from discord.errors import NotFound
 from discord.ext import commands
 from discord.commands import slash_command
-from discord.ext.commands.errors import MissingPermissions, NotOwner
+from discord.ext.commands.errors import MissingPermissions
 import asyncio
 
 class Mod(commands.Cog):

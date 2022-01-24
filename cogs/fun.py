@@ -562,7 +562,6 @@ class Fun(commands.Cog):
 
 # setup COMMAND
 
-
 def setup(bot):
     bot.add_cog(Fun(bot))
     print("Fun Cog is Loaded\n------")
