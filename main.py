@@ -50,6 +50,29 @@ async def on_guild_remove(guild):
     em.set_footer(text=f"Guild Created At")
     await bot.get_channel(912006221182152725).send(embed=em)
 
+# Welcome Message
+
+@bot.event
+async def on_member_join(member):
+    if member.guild.id == 931474769797316638: #Check for Joins in a specific Guild
+        guild = bot.get_guild(931474769797316638)
+        botrole = discord.utils.get(guild.roles, name="Automation") # Auto-assign a role from Guild mentioned above.
+        humanrole = discord.utils.get(guild.roles, name="Insighters")
+        embed = discord.Embed(title="Welcome to `_TheKaushikG_` 🎴", description=f"Hey {member.mention}, Welcome to `_TheKaushikG_` 🎴.\n Enjoy your stay here. If you have any queries, feel free to contact our Management & Staff Team.\n We hope you will have a good time here. To Get started, check out these channels:")
+        embed.add_field(name='‎‎‎‏‏‎ ‎', value=f"╭・Brief information about the Rules:\n ╰・<#931474769797316641>", inline=False)
+        embed.add_field(name='‎‎‎‏‏‎ ‎', value=f"╭・Spice up your profile with some Self-Assignable Roles:\n ╰・<#931560761409548328>", inline=False)
+        embed.add_field(name='‎‎‎‏‏‎ ‎', value=f"╭・Stay tuned with our Official Server Updates:\n ╰・<#931516407747846164>", inline=False)
+        embed.add_field(name='‎‎‎‏‏‎ ‎', value=f"╭・Hangout with your friends :\n ╰・<#931474769797316643>", inline=False)
+        embed.set_thumbnail(url=guild.icon.url)
+        embed.set_image(url=f"https://cdn.discordapp.com/attachments/912569804483858434/931586826207109190/Welcome_Banner.png")
+        embed.set_footer(icon_url=guild.icon.url, text="Thanks For Joining <3")
+        await bot.get_channel(931474769797316640).send(content=f"{member.mention}", embed=embed)
+
+        if member.bot == True:
+            await member.add_roles(botrole)
+        else:
+            await member.add_roles(humanrole)
+
 #Cogs Setup
 
 extensions=[
