@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import io
 from logging import error
-from discord.commands.commands import Option, slash_command
+from discord import Option, slash_command
 from discord.ext import commands
 import aiohttp
 import requests
@@ -115,7 +115,7 @@ class Api(commands.Cog):
 # YearFact
 
     @slash_command()
-    async def yearfact (self, ctx):
+    async def yearfact(self, ctx):
         """📅 Sends a random Year fact"""
         await ctx.defer()
         async with aiohttp.ClientSession() as cs:

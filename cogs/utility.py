@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord.commands import slash_command
 from discord.ext.commands.errors import MissingPermissions 
-from discord.commands.commands import slash_command, Option
+from discord import slash_command, Option
 from ago import human
 import collections
 import discord.utils
@@ -109,6 +109,7 @@ class Utility(commands.Cog):
         time = ctx.guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p ")
         voice = str(len(guild.voice_channels))
         text = str(len(guild.text_channels))
+        verification_level = str(guild.verification_level).capitalize()
         statuses = collections.Counter(
             [member.status for member in guild.members])
 
@@ -125,10 +126,9 @@ class Utility(commands.Cog):
             embed.set_thumbnail(url=f"{self.me.avatar.url}")
         embed.set_author(name=f"Information for  {ctx.guild.name}")
         embed.add_field(name="__General information__\n", value=f'**Server name : ** `{guild.name}`\n'
-                        f'**Server region : ** `{guild.region}`\n'
                         f'**Server ID : ** `{guild.id}`\n'
                         f'**Created at : ** `{time}`\n'
-                        f'**Verification level : ** `{guild.verification_level}`\n'
+                        f'**Verification level : ** `{verification_level}`\n'
                         f'**Server owner : ** <@{ctx.guild.owner_id}> \n', inline=False)
 
         embed.add_field(name="\n\n\n__Statistics__", value=f'**Member count : ** {ctx.guild.member_count}\n'

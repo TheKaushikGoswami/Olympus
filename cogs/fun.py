@@ -1,5 +1,5 @@
 import discord
-from discord.commands.commands import Option, slash_command
+from discord import Option, slash_command
 from discord.errors import Forbidden
 from discord.ext import commands
 import random
@@ -14,7 +14,7 @@ class Fun(commands.Cog):
 
 # 8ball
 
-    @slash_command(name="8ball", guild_ids=[830504002905964586, 828550575023980554, 820621306797359124])
+    @slash_command(name="8ball")
     async def _8ball(self, ctx, *, question: Option(str, "Write Your Question", required=True)):
         """The Ultimate 8-ball game is now on Discord 🎱"""
         responses = ['It is certain.',
@@ -44,16 +44,11 @@ class Fun(commands.Cog):
                     value=f"**My Magic Foretells me:\n `{random.choice(responses)}`**",)
         await ctx.respond(embed=e)
 
-    @_8ball.error
-    async def _8ball_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.respond('Please ask a Question!')
-
 # Lovemeter
 
     @slash_command()
     async def lovemeter(self, ctx, name1: Option(str, "Enter the name of 1st lovebird", required=True), name2: Option(str, "Enter the name of 2nd lovebird", required=True)):
-        """How Much DO You Love Me~ Senpai? 💖"""
+        """How Much Do You Love Me~ Senpai? 💖"""
         percentage = random.randint(0, 100)
 
         if 0 <= percentage <= 10:
@@ -370,8 +365,12 @@ class Fun(commands.Cog):
         try:
             await msg.add_reaction("🍻")
             await self.bot.wait_for('raw_reaction_add', timeout=10.0, check=reaction_check)
-            await msg.edit(content=f"**{user.mention}** and **{ctx.author.mention}** Are enjoying a lovely 🍻 coz\n\n `{reason}`")
-            await msg.clear_reactions()
+            if reason == None:
+                await msg.edit(content=f"**{user.mention}** and **{ctx.author.mention}** Are enjoying a lovely 🍻")
+                await msg.clear_reactions()
+            else:
+                await msg.edit(content=f"**{user.mention}** and **{ctx.author.mention}** Are enjoying a lovely 🍻 coz\n\n `{reason}`")
+                await msg.clear_reactions()
         except asyncio.TimeoutError:
             await msg.delete()
             await ctx.send(f"Well, it seems **{user.name}** didn't wanted to say 'cheers' with **`{ctx.author.name}`** ;-;")
@@ -472,7 +471,7 @@ class Fun(commands.Cog):
                 'dressing up as a cookie and cookie monster ate them.',
                 'trying to re-act Indiana Jones, died from a snake bite.',
                 'tried to short circuit me, not that easy retard',
-                'tried to fight a bear with there hands',
+                'tried to fight a bear with their hands',
                 'getting Billy Heartied in the ball sacks'
                 ]
         await ctx.respond(embed=discord.Embed(
@@ -561,6 +560,7 @@ class Fun(commands.Cog):
             pass
 
 # setup COMMAND
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

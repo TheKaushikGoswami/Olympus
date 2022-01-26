@@ -1,5 +1,5 @@
 import discord
-from discord.commands.commands import Option
+from discord import Option
 from discord.commands.errors import ApplicationCommandInvokeError
 from discord.errors import NotFound
 from discord.ext import commands
@@ -44,7 +44,7 @@ class Mod(commands.Cog):
 
     @slash_command()
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, amount: Option(int, "Enter the number of messages to be purged", required=False)):
+    async def purge(self, ctx, amount: Option(int, "Enter the number of messages to be purged(Default = 3)", required=False)):
         """🧹 Clears a certain amount of messages from the channel"""
         if amount == None:
             amount = 3
@@ -67,7 +67,7 @@ class Mod(commands.Cog):
 
     @slash_command()
     @commands.has_permissions(manage_messages=True)
-    async def purgeuser(self, ctx, member: Option(discord.Member, "Select the Member", required=True), amount: Option(int, "Enter the number of messages to be purged", required=False)):
+    async def purgeuser(self, ctx, member: Option(discord.Member, "Select the Member", required=True), amount: Option(int, "Enter the number of messages to be purged(Default = 5)", required=False)):
         """🧹 Clears a certain amount of messages by a specific user"""
         if amount == None:
             amount = 5
