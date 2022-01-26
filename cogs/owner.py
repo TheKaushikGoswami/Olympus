@@ -104,6 +104,36 @@ class Owner(commands.Cog):
         if isinstance(error, NotOwner):
             await ctx.respond(f"**<:Cross:902943066724388926> Hey! You lack permission to use this command as you don't own me!**")
 
+# Rules
+
+    @slash_command(guild_ids=[931474769797316638])
+    @commands.is_owner()
+    async def rules(self, ctx):
+        """The Rules command for my Private Server"""
+        color = 0xa100f2
+        embed = discord.Embed(color=color)
+
+        embed.add_field(name='<:badge:910783553694994453> Rules! <:badge:910783553694994453>', value='**1.** Do not be racist, homophobic, or sexist, it can be overlooked if the other party is fine with it.\n\n'
+                        '**2.** You are allowed to curse on someone as long as they do not mind. There are no barred curse words. If there are complaints on one\'s behavior then it may result in certain actions taken from the moderators.\n\n'
+                        '**3.** You should not offend or antagonize other parties. You never know who the other party may be.\n\n'
+                        '**4.** Spamming of texts, emojis, images, etc is strictly prohibited, if found out it may result in a permanent ban from the server.\n\n'
+                        '**5.** The server does allow anything under the [Discord ToS](https://discord.com/terms) but it doesn\'t means that we won\'t take actions if the situation is necessary.\n\n', inline=False)
+        embed.add_field(name='‎‎‎‏‏‎ ‎', value='**6.** Posts related to the information of another party, private messages, or pictures without their permission will be removed. This is a rigorous  policy, may result in a permanent ban.\n\n'
+                        '**7.** Moderators have final judgment on everything, if they ask you to stop doing something then stop. Do not complain if you have been kicked or banned from the server.\n\n'
+                        '**8.** You are free to debate about anything, just don\'t force your beliefs on others.\n\n'
+                        '**9.** There shouldn\'t be any bullying or bad behavior to new members.\n\n'
+                        '**10.** There should not be any sharing of graphical or image posts related to violence, gore, and things that are against Discord ToS \n\n'
+                        '**11.** All NSFW content under ToS  are allowed, as long as they are NOT in Non-NSFW channels. This includes gifs, profile pictures, status,etc.\n\n'
+                        '**12.** Self-advertising on main channels won\'t be tolerated, asking for roles, permissions, custom commands will result in warns from the moderators.', inline=False)
+        embed.set_footer(icon_url=ctx.author.avatar.url, text="React with Tick below If You read everything!")
+        await ctx.respond(embed=embed)
+
+    @rules.error
+    async def rule_error(self, ctx, error):
+        print(type(error), "--- Rule Command")
+        if isinstance(error, NotOwner):
+            await ctx.respond(f"**<:Cross:902943066724388926> Hey! You lack permission to use this command as you don't own me!**", ephemeral=True)
+
 def setup(bot):
     bot.add_cog(Owner(bot))
     print("Owner cog is Loaded\n------")
