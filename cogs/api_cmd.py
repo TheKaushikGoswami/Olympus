@@ -1,3 +1,6 @@
+from datetime import datetime
+from importlib.metadata import requires
+from xml.etree.ElementTree import Comment
 import discord
 from discord.ext import commands
 import io
@@ -5,6 +8,7 @@ from logging import error
 from discord import Option, slash_command
 from discord.ext import commands
 import aiohttp
+from discord.ext.commands.errors import MissingPermissions
 import requests
 
 class Api(commands.Cog):
@@ -58,7 +62,7 @@ class Api(commands.Cog):
 
                 await ctx.respond(embed=embed)
 
-# Panda
+# Koala
 
     @slash_command()
     async def koala(self, ctx):
@@ -239,7 +243,7 @@ class Api(commands.Cog):
                     if 300 > af.status >= 200:
                         fp = io.BytesIO (await af.read())
                         fileee = discord.File(fp, "triggered.gif")
-                        em = discord.Embed(title="", color=ctx.author.color)
+                        em = discord.Embed(title="I am Triggeredddddd!!!", color=ctx.author.color)
                         em.set_image(url="attachment://triggered.gif")
                         await ctx.edit(embed=em, files=[fileee])
         else:
@@ -248,33 +252,73 @@ class Api(commands.Cog):
                     if 300 > af.status >= 200:
                         fp = io.BytesIO (await af.read())
                         fileee = discord.File(fp, "triggered.png")
-                        em = discord.Embed(title="", color=ctx.author.color)
+                        em = discord.Embed(title="I am Triggeredddddd!!!", color=ctx.author.color)
                         em.set_image(url="attachment://triggered.png")
                         await ctx.edit(embed=em, files=[fileee])
-        
-# Weather
+
+# Wasted
 
     @slash_command()
-    async def weather(self, ctx, location: Option(str, "Enter the name of the location", required=True)):
-        """⛅ Gets the Weather information for a location"""
-        embed = discord.Embed(color=123456,
-                            timestamp=discord.utils.utcnow(),
-                            title=f"Weather in {location}")
-        embed.set_image(
-            url=
-            f"https://api.cool-img-api.ml/weather-card?location={location}&background=https://cdn.discordapp.com/attachments/820496743211728937/829268642801647636/2021-04-07-15-17-17.jpg"
-        )
-        await ctx.respond(embed=embed)
+    async def wasted(self, ctx, member: Option(discord.Member, "Select the Wasted Member", required=False)):
+        """💀 Ah Shit! You have been wasted"""
+        await ctx.defer()
+        if member == None:
+            member = ctx.author
 
-# Achievement
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'https://some-random-api.ml/canvas/wasted?avatar={member.display_avatar.with_static_format("png").url}') as af:
+                if 300 > af.status >= 200:
+                    fp = io.BytesIO (await af.read())
+                    fileee = discord.File(fp, "wasted.png")
+                    em = discord.Embed(title="Ah Shit! You have been Wasted", color=ctx.author.color)
+                    em.set_image(url="attachment://wasted.png")
+                    await ctx.edit(embed=em, files=[fileee])
+
+# Passed
 
     @slash_command()
-    async def achievement(self, ctx, text: Option(str,"Enter the text for achievement", required=True)):
-        """🏆 Rewards you with some achievement (whatever you want to)"""
-        final = text.replace(" ", "+")
-        image = f"https://api.cool-img-api.ml/achievement?text={final}"
+    async def passed(self, ctx, member: Option(discord.Member, "Select the Member who passed the Mission", required=False)):
+        """😉 Mission Passed! Respect ++"""
+        await ctx.defer()
+        if member == None:
+            member = ctx.author
 
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'https://some-random-api.ml/canvas/passed?avatar={member.display_avatar.with_static_format("png").url}') as af:
+                if 300 > af.status >= 200:
+                    fp = io.BytesIO (await af.read())
+                    fileee = discord.File(fp, "passed.png")
+                    em = discord.Embed(title="Mission Passed!", color=ctx.author.color)
+                    em.set_image(url="attachment://passed.png")
+                    await ctx.edit(embed=em, files=[fileee])
+
+# Youtube Comment
+
+    @slash_command()
+    async def comment(self, ctx, comment: Option(str, "The Contents of the Comment", required=True), member: Option(discord.Member, "Choose the Comment Author", required=False)):
+        """🤏 Fake YouTube Comments! Ouch!"""
+        if member == None:
+            member = ctx.author
+        name = str(member.name).replace(" ", "+")
+        avatar=member.display_avatar.with_static_format("png").url
+        comment=comment.replace(" ", "+")
+        image = f"https://some-random-api.ml/canvas/youtube-comment?username={name}&avatar={avatar}&comment={comment}"
         await ctx.respond(image)
+    
+# Fake Tweet
+
+    @slash_command()
+    async def tweet(self, ctx, tweet: Option(str, "The Contents of the Tweet", required=True), member: Option(discord.Member, "Choose the Tweet Author", required=False)):
+        """🐤 Fake Tweets! Ouch!"""
+        if member == None:
+            member = ctx.author
+        username=str(member.name).replace(" ", "+")
+        displayname=str(member.display_name).replace(" ", "+")
+        avatar=member.display_avatar.with_static_format("png").url
+        comment=tweet.replace(" ", "+")
+        image = f"https://some-random-api.ml/canvas/tweet?username={username}&displayname={displayname}&comment={comment}&avatar={avatar}"
+        await ctx.respond(image)
+
 
 def setup(bot):
     bot.add_cog(Api(bot))

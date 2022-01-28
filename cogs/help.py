@@ -26,9 +26,9 @@ class Help(commands.Cog):
         embed1.add_field(
             name="🛡️ Moderation", value=f'`nick` `purge` `purgeuser` `mute` `unmute` `kick` `ban` `nuke` `role` `slowmode` `lock` `unlock` `name_role`', inline=False)
         embed1.add_field(
-            name="⚽ Fun & Games", value=f'`8ball` `activity` `lovemeter` `rps` `sad/happy/angry` `hello` `lenny` `flip` `f` `calculator` `diceroll` `meme` `joke` `password` `slots` `cheers` `simp` `iq` `roast` `kill`',  inline=False)
+            name="⚽ Fun & Games", value=f'`8ball` `activity` `lovemeter` `rps` `sad/happy/angry` `hello` `lenny` `flip` `f` `calculator` `diceroll` `password` `slots` `cheers` `simp` `iq` `roast` `kill`',  inline=False)
         embed1.add_field(
-            name="🖼️ Images", value=f'`cat` `dog` `panda` `koala` `clyde` `facepalm` `wink` `headpat` `triggered` `hug` `snap`', inline=False)
+            name="🖼️ Images", value=f'`cat` `dog` `panda` `koala` `clyde` `facepalm` `wink` `headpat` `triggered` `hug` `snap` `comment` `tweet` `passed` `wasted`', inline=False)
         embed1.add_field(
             name="🛠️ Utility", value=f'`userinfo` `serverinfo` `avatar` `membercount` `roleinfo` `channelstats` `say` `mentions` `timer`',  inline=False)
         embed1.add_field(
