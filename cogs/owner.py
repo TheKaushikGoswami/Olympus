@@ -104,6 +104,53 @@ class Owner(commands.Cog):
         if isinstance(error, NotOwner):
             await ctx.respond(f"**<:Cross:902943066724388926> Hey! You lack permission to use this command as you don't own me!**")
 
+# Say
+
+    @slash_command()
+    @commands.is_owner()
+    async def say(self, ctx, message: Option(str, "Enter the message You want me to say", required=True)):
+        """💬 Makes Me speak Something For You"""
+        say_embed = discord.Embed(
+            description=f'**<:Tick:902943008096391299> Your message was sent successfully!**', color=0x3498DB)
+        await ctx.respond(embed=say_embed, ephemeral=True)
+        await ctx.send(message)
+
+    @say.error
+    async def say_error(self, ctx, error):
+        print(type(error), "--- Say Command")
+        if isinstance(error, NotOwner):
+            await ctx.respond(f"**<:Cross:902943066724388926> Hey! You lack permission to use this command as you don't own me!**")
+
+# Change Presence
+
+    @slash_command()
+    @commands.is_owner()
+    async def change_presence(self, ctx, status: Option(str, "Status of the Bot", choices=["Online", "Idle", "Do Not Disturb", "Invisible"], required=False), activity: Option(str, "The Activity of the Bot", choices=["Playing", "Watching", "Listening", "Streaming"], required=False), activity_name = Option(str, "Name of the Activity", required=False, default="/help | Made with ❤️ by _TheKauchikG_#5300")):
+        """🚀 Change the Activity of the Bot"""
+        statuses = {"Online" : discord.Status.online, "Idle" : discord.Status.idle, "Do Not Disturb" : discord.Status.do_not_disturb, "Invisible" : discord.Status.invisible}
+        final_status = statuses.get(status)
+
+        activities = {"Playing" : discord.ActivityType.playing, "Watching" : discord.ActivityType.watching, "Listening" : discord.ActivityType.listening, "Streaming" : discord.ActivityType.streaming}
+        final_activity = activities.get(activity)
+
+        presence_embed = discord.Embed(description=f'**<:Tick:902943008096391299> The Presence was updated successfully!**', color=0x3498DB)
+        try:
+            if final_activity == discord.ActivityType.streaming:
+                link = "https://www.twitch.tv/thekaushikgoswami"
+                await self.bot.change_presence(status=discord.Status.streaming, activity=discord.Activity(type=final_activity,name=activity_name, url=link))
+                await ctx.respond(embed=presence_embed)
+            elif final_activity == discord.ActivityType.playing:
+                game=discord.Game(activity_name)
+                await self.bot.change_presence(status=final_status, activity=game)
+                await ctx.respond(embed=presence_embed)
+            else:
+                await self.bot.change_presence(status=final_status, activity=discord.Activity(type=final_activity, name=activity_name))
+                await ctx.respond(embed=presence_embed)
+        except discord.InvalidArgument:
+            await ctx.respond(f"**<:Cross:902943066724388926> There was an issue in setting up that activity. Please Try Again**", ephemeral=True)
+        except NotOwner:
+            await ctx.respond(f"**<:Cross:902943066724388926> Hey! You lack permission to use this command as you don't own me!**")
+
 # Rules
 
     @slash_command(guild_ids=[931474769797316638])

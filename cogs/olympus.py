@@ -1,9 +1,14 @@
 import discord, datetime, time
-from discord import slash_command
+from discord import command, slash_command
 from discord.ext import commands
+import sys
 import datetime
+import random
 import platform
 import time
+from ago import human
+import collections
+from discord.ext.commands import bot
 import discord.utils
 
 start_time = time.time()

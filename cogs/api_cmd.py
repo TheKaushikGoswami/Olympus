@@ -266,7 +266,7 @@ class Api(commands.Cog):
             member = ctx.author
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(f'https://some-random-api.ml/canvas/wasted?avatar={member.display_avatar.with_static_format("png").url}') as af:
+            async with session.get(f'https://some-random-api.ml/canvas/wasted?avatar={member.display_avatar.with_format("png").url}') as af:
                 if 300 > af.status >= 200:
                     fp = io.BytesIO (await af.read())
                     fileee = discord.File(fp, "wasted.png")
@@ -284,7 +284,7 @@ class Api(commands.Cog):
             member = ctx.author
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(f'https://some-random-api.ml/canvas/passed?avatar={member.display_avatar.with_static_format("png").url}') as af:
+            async with session.get(f'https://some-random-api.ml/canvas/passed?avatar={member.display_avatar.with_format("png").url}') as af:
                 if 300 > af.status >= 200:
                     fp = io.BytesIO (await af.read())
                     fileee = discord.File(fp, "passed.png")
@@ -300,7 +300,7 @@ class Api(commands.Cog):
         if member == None:
             member = ctx.author
         name = str(member.name).replace(" ", "+")
-        avatar=member.display_avatar.with_static_format("png").url
+        avatar=member.display_avatar.with_format("png").url
         comment=comment.replace(" ", "+")
         image = f"https://some-random-api.ml/canvas/youtube-comment?username={name}&avatar={avatar}&comment={comment}"
         await ctx.respond(image)
@@ -314,7 +314,7 @@ class Api(commands.Cog):
             member = ctx.author
         username=str(member.name).replace(" ", "+")
         displayname=str(member.display_name).replace(" ", "+")
-        avatar=member.display_avatar.with_static_format("png").url
+        avatar=member.display_avatar.with_format("png").url
         comment=tweet.replace(" ", "+")
         image = f"https://some-random-api.ml/canvas/tweet?username={username}&displayname={displayname}&comment={comment}&avatar={avatar}"
         await ctx.respond(image)

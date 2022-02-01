@@ -24,7 +24,7 @@ class Help(commands.Cog):
         embed1.set_thumbnail(
             url=f"https://media2.giphy.com/media/401pPJe8AtsC55e1y8/source.gif")
         embed1.add_field(
-            name="🛡️ Moderation", value=f'`nick` `purge` `purgeuser` `mute` `unmute` `kick` `ban` `nuke` `role` `slowmode` `lock` `unlock` `name_role`', inline=False)
+            name="🛡️ Moderation", value=f'`nick` `purge` `purgeuser` `mute` `unmute` `kick` `ban` `nuke` `role` `slowmode` `lock` `unlock`', inline=False)
         embed1.add_field(
             name="⚽ Fun & Games", value=f'`8ball` `activity` `lovemeter` `rps` `sad/happy/angry` `hello` `lenny` `flip` `f` `calculator` `diceroll` `password` `slots` `cheers` `simp` `iq` `roast` `kill`',  inline=False)
         embed1.add_field(
@@ -36,7 +36,7 @@ class Help(commands.Cog):
         embed1.add_field(
             name="🤖 Olympus", value=f'`about` `ping` `invite` `support` `help` `uptime`', inline=False)
         embed1.add_field(
-            name=f"👑 Owner Only", value=f'`stats` `serverlist` `createinvite` `leave`', inline=False)
+            name=f"👑 Owner Only", value=f'`stats` `serverlist` `createinvite` `leave` `change_presence`', inline=False)
 
         embed1.set_footer(
             text=f"Olympus is made with ❤️ | _TheKauchikG_#5300", icon_url=f'{ctx.author.avatar.url}')

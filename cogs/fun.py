@@ -40,8 +40,8 @@ class Fun(commands.Cog):
         e = discord.Embed(title=f"MAGIC 8-BALL", color=ctx.author.color)
         e.set_thumbnail(
             url=f'https://media.tenor.com/images/47ceded02690a48da88d02bb7c1f5f46/tenor.gif')
-        e.add_field(name=f"🔮Question by `{ctx.author}`: `{question}`",
-                    value=f"**My Magic Foretells me:\n `{random.choice(responses)}`**",)
+        e.add_field(name=f"**🔮Question by `{ctx.author}`:**", value=f"`{question}`", inline=False)
+        e.add_field(name=f"**My Magic Foretells me:**", value = f"`{random.choice(responses)}`", inline=False)
         await ctx.respond(embed=e)
 
 # Lovemeter
@@ -520,12 +520,8 @@ class Fun(commands.Cog):
         d.text((90, 25+w), message, font=titlefnt, fill=colour["content"])
 
         img.save('img.png')
-        if member.avatar.is_animated():
-            await member.display_avatar.with_static_format("gif").save("pfp.gif")
-            f2 = Image.open("pfp.gif")
-        else:
-            await member.display_avatar.with_static_format("png").save("pfp.png")
-            f2 = Image.open("pfp.png")
+        await member.display_avatar.with_format("png").save("pfp.png")
+        f2 = Image.open("pfp.png")
         f1 = Image.open("img.png")
         f2.thumbnail((50, 55))
         f2.save("pfp.png")

@@ -19,34 +19,43 @@ class Utility(commands.Cog):
     async def userinfo(self, ctx, member: Option(discord.Member, "Choose The Member", required=False)):
         """👤 Gets Information about a User"""
         await ctx.defer()
-        if not member:
+        if member == None:
             member = ctx.author
         uroles = []
+
         for role in member.roles[1:]:
             if role.is_default():
                 continue
             uroles.append(role.mention)
-
             uroles.reverse()
-        timestamp = 'ㅤ'
         time = member.created_at
         time1 = member.joined_at
         if member.status == discord.Status.online:
             status = '<:online:909452628763750400>'
         elif member.status == discord.Status.idle:
             status = '<:idle:909452697999118337>'
-        elif member.status == discord.Status.dnd:
+        elif member.status == discord.Status.do_not_disturb:
             status = '<:dnd:909452665224822826>'
-        else:
+        elif member.status == discord.Status.offline:
             status = '<:offline:909452732719570974>'
         if member.activity == None:
-            activity = 'None'
+            activity = "None"
         else:
-            activity = member.activities[-1].name
-            if member.activities[0].details != None:
-                timestamp = member.activities[0].details
+            if member.activities[-1].type == discord.ActivityType.custom:
+                activity = "None"
+            elif member.activities[-1].type == discord.ActivityType.watching:
+                activity = f"Watching {member.activities[-1].name}"
+            elif member.activities[-1].type == discord.ActivityType.listening:
+                activity = f"Listening to {member.activities[-1].name}"
+            elif member.activities[-1].type == discord.ActivityType.playing:
+                activity = f"Playing {member.activities[-1].name}"
+            elif member.activities[-1].type == discord.ActivityType.streaming:
+                activity = f"Streaming {member.activities[-1].name} on {member.activities[-1].platform}"
             else:
-                timestamp = ' '
+                try:
+                    activity = member.activities[-1].name
+                except:
+                    activity = member.activities[-1]
         embed = discord.Embed(color=ctx.author.color, type="rich")
         embed.set_thumbnail(url=f"{member.avatar.url}")
         embed.set_author(name=f"{member.name}'s information",
@@ -54,17 +63,16 @@ class Utility(commands.Cog):
         embed.add_field(name="__General information__", value=f'**Nickname :** `{member.display_name}`\n'
                         f'**ID :** {member.id}\n'
                         f'**Account created :** `{member.created_at.strftime("%A, %B %d %Y %H:%M:%S %p")}`\n{human(time, 4)}\n'
-                        f'**Server Joined :** `{member.created_at.strftime("%A, %B %d %Y %H:%M:%S %p")}`\n{human(time1, 4)}\n', inline=False)
+                        f'**Server Joined :** `{member.joined_at.strftime("%A, %B %d %Y %H:%M:%S %p")}`\n{human(time1, 4)}\n', inline=False)
 
         embed.add_field(name="__Role info__", value=f'**Highest role :** {member.top_role.mention}\n'
                         f'**Color** : `{member.color}`\n' f'**Role(s) :** {", ".join(uroles)}\n', inline=False)
 
-        embed.add_field(name="__Presence__", value=f'**Status : ** {status}\n'
-                        f'**Activity : ** ```{activity}\nㅤ{timestamp}```')
+        embed.add_field(name="__Presence__", value=f'**Status :** {status}\n'
+                        f'**Activity :** ```{activity}```')
         embed.set_footer(
             text=f"Requested by {ctx.author.name}",  icon_url=ctx.author.avatar.url)
         await ctx.edit(embed=embed)
-        return
 
 # avatar
 
@@ -75,7 +83,7 @@ class Utility(commands.Cog):
             user = ctx.author
         embed = discord.Embed(
             title=f"`{user.name}`'s avatar", color=ctx.author.color)
-        embed.description = f'[PNG]({user.display_avatar.with_static_format("png")}) | [JPEG]({user.display_avatar.with_static_format("jpeg")}) | [WEBP]({user.display_avatar.with_static_format("webp")})'
+        embed.description = f'[PNG]({user.display_avatar.with_format("png")}) | [JPEG]({user.display_avatar.with_format("jpeg")}) | [WEBP]({user.display_avatar.with_format("webp")})'
         embed.set_image(url=str(user.display_avatar.with_static_format("png")))
         embed.set_footer(
             text=f"Requested by {ctx.author}",  icon_url=ctx.author.avatar.url)
@@ -257,37 +265,20 @@ class Utility(commands.Cog):
 # Mentions
 
     @slash_command()
-    async def mentions(self, ctx, limit: Option(str, "Number of messages to be checked for mentions (10 by Default)", default=10, required=False), user: Option(discord.Member, "Select the User whose mentions You want to check for", required=False)):
+    async def mentions(self, ctx, limit: Option(int, "Number of messages to be checked for mentions (10 by Default)", default=10, required=False), user: Option(discord.Member, "Select the User whose mentions You want to check for", required=False)):
         """🔴 Counts the amount of mentions You got in last certain amount of messages"""
         user = ctx.author if not user else user
         try:
-            limit = int(limit)
+            limit = limit
         except ValueError:
-            return await ctx.respond('The limit for the searching must be a number.')
+            return await ctx.respond('The limit for the searching must be a number.', ephemeral=True)
         if limit > 100:
             return await ctx.respond('Max limit is 100 messages. This is to keep the command consistent.')
         counter = 0
         async for message in ctx.channel.history(limit=limit):
             if user.mentioned_in(message):
                 counter += 1
-        await ctx.respond('You have been pinged {} times in the last {} messages.'.format(counter, limit))
-
-# Say
-
-    @slash_command()
-    @commands.has_permissions(manage_messages=True)
-    async def say(self, ctx, message: Option(str, "Enter the message You want me to say", required=True)):
-        """💬 Makes Me speak Something For You"""
-        say_embed = discord.Embed(
-            description=f'**<:Tick:902943008096391299> Your message was sent successfully!**', color=0x3498DB)
-        await ctx.respond(embed=say_embed, ephemeral=True)
-        await ctx.send(message)
-
-    @say.error
-    async def say_error(self, ctx, error):
-        print(type(error), "--- Say Command")
-        if isinstance(error, MissingPermissions):
-            await ctx.respond(f"**<:Cross:902943066724388926> You need `Manage Messages` permission to be able to use this command.**")
+        await ctx.respond(f'User `{user} have been pinged {counter} times in the last {limit} messages.')
 
 def setup(bot):
     bot.add_cog(Utility(bot))
